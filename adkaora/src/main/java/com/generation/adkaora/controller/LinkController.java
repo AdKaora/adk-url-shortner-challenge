@@ -40,7 +40,7 @@ public class LinkController
         Set<String> shortLinkCollection = new HashSet<String>();
         shortLinkCollection.add(shortLink);
 
-        if(shortLinkCollection.contains(longLink))
+        if(shortLinkCollection.contains(shortLink))
             throw new RuntimeException("Link already exists");
 
         return ch.saveLink(link);
