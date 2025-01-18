@@ -14,8 +14,19 @@ public class ControllerHelperImpl implements ControllerHelper
     LinkRepository lRepo;
 
     @Override
+    public List<Link> findAllLinks(){
+        return lRepo.findAll();
+    }
+
+    @Override
     public Link saveLink(Link link){return lRepo.save(link);}
 
     @Override
     public boolean findByShortenedUrl(String shortenedUrl){return lRepo.findAllByShortenedUrl(shortenedUrl).isPresent();}
+
+    @Override
+    public Link findShortLinkByLongLink(String longLink){return lRepo.findByFirstUrl(longLink);}
+
+    @Override
+    public Link findLongLinkByShortLink(String shortLink){return lRepo.findByShortenedUrl(shortLink);}
 }

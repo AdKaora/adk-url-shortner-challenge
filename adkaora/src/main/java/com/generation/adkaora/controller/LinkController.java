@@ -3,12 +3,10 @@ package com.generation.adkaora.controller;
 import com.generation.adkaora.controller.helpers.ControllerHelper;
 import com.generation.adkaora.model.entities.Link;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -18,6 +16,12 @@ public class LinkController
 {
     @Autowired
     ControllerHelper ch;
+
+    @GetMapping("/{longLink}")
+    public Link getShortLink(@PathVariable String longLink){return ch.findShortLinkByLongLink(longLink);}
+
+    @GetMapping("/{shortLink}")
+    public Link getLongLink(@PathVariable String shortLink){return  ch.findLongLinkByShortLink(shortLink);}
 
     @PostMapping
     public Link createShortLink(@RequestBody String longLink)
