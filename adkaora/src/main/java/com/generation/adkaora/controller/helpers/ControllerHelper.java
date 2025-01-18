@@ -11,7 +11,7 @@ public interface ControllerHelper
     Link saveLink(Link link);
 
     boolean findByShortenedUrl(String shortenedUrl);
-    Link findShortLinkByLongLink(String longLink);
+    Link findByLongLink(String longLink);
 
     Link findLongLinkByShortLink(String shortLink);
 }

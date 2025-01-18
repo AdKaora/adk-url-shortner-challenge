@@ -5,10 +5,7 @@ import com.generation.adkaora.model.entities.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/links")
@@ -18,7 +15,7 @@ public class LinkController
     ControllerHelper ch;
 
     @GetMapping("/{longLink}")
-    public Link getShortLink(@PathVariable String longLink){return ch.findShortLinkByLongLink(longLink);}
+    public Link getShortLink(@PathVariable String longLink){return ch.findByLongLink(longLink);}
 
     @GetMapping("/{shortLink}")
     public Link getLongLink(@PathVariable String shortLink){return  ch.findLongLinkByShortLink(shortLink);}
@@ -31,7 +28,7 @@ public class LinkController
         List<Link> allLinks = ch.findAllLinks();
         for(Link l : allLinks)
             if(l.getFirstUrl().equals(longLink))
-                break;
+                return ch.findByLongLink(longLink);
 
         link.setFirstUrl(longLink);
         String shortLink = "https://short.ly/";

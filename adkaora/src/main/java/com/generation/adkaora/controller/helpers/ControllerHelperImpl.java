@@ -25,7 +25,7 @@ public class ControllerHelperImpl implements ControllerHelper
     public boolean findByShortenedUrl(String shortenedUrl){return lRepo.findAllByShortenedUrl(shortenedUrl).isPresent();}
 
     @Override
-    public Link findShortLinkByLongLink(String longLink){return lRepo.findByFirstUrl(longLink);}
+    public Link findByLongLink(String longLink){return lRepo.findByFirstUrl(longLink);}
 
     @Override
     public Link findLongLinkByShortLink(String shortLink){return lRepo.findByShortenedUrl(shortLink);}
