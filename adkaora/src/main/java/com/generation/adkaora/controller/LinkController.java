@@ -28,18 +28,19 @@ public class LinkController
         int linkLength = 6;
         String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
 
-        StringBuilder sb = new StringBuilder(linkLength);
-        Random rndm = new Random();
-        for(int i = 0; i < linkLength; i++)
+        do
         {
-            sb.append(alphaNumeric.charAt(rndm.nextInt(alphaNumeric.length())));
+            StringBuilder sb = new StringBuilder(linkLength);
+            Random rndm = new Random();
+            for(int i = 0; i < linkLength; i++)
+            {
+                sb.append(alphaNumeric.charAt(rndm.nextInt(alphaNumeric.length())));
 
-        }
-        shortLink += sb.toString();
+            }
+            shortLink += sb.toString();
+        } while(ch.findByShortenedUrl(shortLink));
 
-        if(ch.getLinks().contains(shortLink))
-            throw new RuntimeException("Link already exists");
-
+        link.setShortenedUrl(shortLink);
         return ch.saveLink(link);
     }
 }

@@ -17,5 +17,5 @@ public class ControllerHelperImpl implements ControllerHelper
     public Link saveLink(Link link){return lRepo.save(link);}
 
     @Override
-    public List<Link> getLinks(){return lRepo.findAll();}
+    public boolean findByShortenedUrl(String shortenedUrl){return lRepo.findAllByShortenedUrl(shortenedUrl).isPresent();}
 }

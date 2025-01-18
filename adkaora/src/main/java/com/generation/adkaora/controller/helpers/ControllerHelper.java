@@ -8,5 +8,5 @@ public interface ControllerHelper
 {
     Link saveLink(Link link);
 
-    List<Link> getLinks();
+    boolean findByShortenedUrl(String shortenedUrl);
 }
