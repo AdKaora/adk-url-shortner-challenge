@@ -1,0 +1,23 @@
+<div>
+  <h2>Genera link accorciato</h2>
+  <label for="longLink">Link lungo:</label>
+  <input id="longLink" [(ngModel)]="longLink" placeholder="Inserisci link lungo" />
+
+  <button (click)="generateShortLink()">Genera link corto</button>
+
+  <div *ngIf="shortLink">
+    <p>Link corto: {{ shortLink }}</p>
+  </div>
+</div>
+
+<div>
+  <h2>Ottieni link lungo</h2>
+  <label for="shortLinkInput">Link corto:</label>
+  <input id="shortLinkInput" [(ngModel)]="shortLinkInput" placeholder="Inserisci link corto" />
+
+  <button (click)="getLongLinkFromShort()">Ottieni link lungo</button>
+
+  <div *ngIf="retrievedLongLink">
+    <p>Link lungo: {{ retrievedLongLink }}</p>
+  </div>
+</div>
