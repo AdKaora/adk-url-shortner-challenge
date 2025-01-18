@@ -37,10 +37,7 @@ public class LinkController
         }
         shortLink += sb.toString();
 
-        Set<String> shortLinkCollection = new HashSet<String>();
-        shortLinkCollection.add(shortLink);
-
-        if(shortLinkCollection.contains(shortLink))
+        if(ch.getLinks().contains(shortLink))
             throw new RuntimeException("Link already exists");
 
         return ch.saveLink(link);

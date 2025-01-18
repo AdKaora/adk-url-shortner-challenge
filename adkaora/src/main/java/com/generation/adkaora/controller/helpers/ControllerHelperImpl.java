@@ -5,6 +5,8 @@ import com.generation.adkaora.model.repository.LinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ControllerHelperImpl implements ControllerHelper
 {
@@ -13,4 +15,7 @@ public class ControllerHelperImpl implements ControllerHelper
 
     @Override
     public Link saveLink(Link link){return lRepo.save(link);}
+
+    @Override
+    public List<Link> getLinks(){return lRepo.findAll();}
 }
