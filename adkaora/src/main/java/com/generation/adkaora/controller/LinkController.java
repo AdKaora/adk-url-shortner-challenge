@@ -27,6 +27,12 @@ public class LinkController
     public Link createShortLink(@RequestBody String longLink)
     {
         Link link = new Link();
+
+        List<Link> allLinks = ch.findAllLinks();
+        for(Link l : allLinks)
+            if(l.getFirstUrl().equals(longLink))
+                break;
+
         link.setFirstUrl(longLink);
         String shortLink = "https://short.ly/";
         int linkLength = 6;
