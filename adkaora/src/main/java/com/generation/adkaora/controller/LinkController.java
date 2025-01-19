@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/links")
 public class LinkController
@@ -16,10 +16,13 @@ public class LinkController
     ControllerHelper ch;
 
     @GetMapping("/long/{longLink}")
-    public Link getShortLink(@PathVariable String longLink){return ch.findByLongLink(longLink);}
+    public Link getShortLink(@PathVariable String longLink){
+        System.out.println("LongLink :"+longLink);
+        return ch.findByLongLink(longLink);}
 
     @GetMapping("/short/{shortLink}")
     public Link getLongLink(@PathVariable String shortLink){
+        System.out.println("shortLink: "+shortLink);
         return  ch.findLongLinkByShortLink(shortLink);}
 
     @PostMapping
@@ -34,7 +37,7 @@ public class LinkController
                 return ch.findByLongLink(longLink);
 
         link.setFirstUrl(longLink);
-        String shortLink = "https://short.ly/";
+        String shortLink = "";
         int linkLength = 6;
         String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
 
@@ -47,7 +50,7 @@ public class LinkController
                 sb.append(alphaNumeric.charAt(rndm.nextInt(alphaNumeric.length())));
 
             }
-            shortLink += sb.toString();
+            shortLink = sb.toString();
         } while(ch.findByShortenedUrl(shortLink));
 
         link.setShortenedUrl(shortLink);

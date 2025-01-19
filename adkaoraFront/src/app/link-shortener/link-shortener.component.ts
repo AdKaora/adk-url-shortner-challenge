@@ -37,7 +37,13 @@ export class LinkShortenerComponent {
   }
 
   getLongLinkFromShort(): void {
-    const shortLink = this.shortLinkInput;
+    let shortLink = this.shortLinkInput;
+    console.log("shortLink: "+shortLink);
+
+    const prefix = "https://short.ly/";
+    if (shortLink.startsWith(prefix)) {
+      shortLink = shortLink.slice(prefix.length);
+    }
     this.http.get<Link>(`http://localhost:8080/api/links/short/${shortLink}`).subscribe(
       (response) => {
         this.retrievedLongLink = response.firstUrl;
