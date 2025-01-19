@@ -10,5 +10,5 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
                                                                 //che potrebbe essere assente
     Link findByFirstUrl(String longUrl);
 
-    Link findByShortenedUrl(String shortenedUrl);
+    Link findOneByShortenedUrl(String shortenedUrl);
 }

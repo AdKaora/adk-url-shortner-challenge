@@ -28,5 +28,5 @@ public class ControllerHelperImpl implements ControllerHelper
     public Link findByLongLink(String longLink){return lRepo.findByFirstUrl(longLink);}
 
     @Override
-    public Link findLongLinkByShortLink(String shortLink){return lRepo.findByShortenedUrl(shortLink);}
+    public Link findLongLinkByShortLink(String shortLink){return lRepo.findOneByShortenedUrl(shortLink);}
 }

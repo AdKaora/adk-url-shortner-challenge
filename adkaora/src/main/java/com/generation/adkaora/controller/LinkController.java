@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/links")
 public class LinkController
@@ -14,15 +15,17 @@ public class LinkController
     @Autowired
     ControllerHelper ch;
 
-    @GetMapping("/{longLink}")
+    @GetMapping("/long/{longLink}")
     public Link getShortLink(@PathVariable String longLink){return ch.findByLongLink(longLink);}
 
-    @GetMapping("/{shortLink}")
-    public Link getLongLink(@PathVariable String shortLink){return  ch.findLongLinkByShortLink(shortLink);}
+    @GetMapping("/short/{shortLink}")
+    public Link getLongLink(@PathVariable String shortLink){
+        return  ch.findLongLinkByShortLink(shortLink);}
 
     @PostMapping
-    public Link createShortLink(@RequestBody String longLink)
+    public Link createShortLink(@RequestBody Link inputLink)
     {
+        String longLink = inputLink.getFirstUrl();
         Link link = new Link();
 
         List<Link> allLinks = ch.findAllLinks();

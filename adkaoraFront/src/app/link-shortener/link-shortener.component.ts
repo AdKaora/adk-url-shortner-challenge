@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Link} from '../model/Link';
 import {FormsModule} from '@angular/forms';
@@ -24,8 +24,9 @@ export class LinkShortenerComponent {
   constructor(private http: HttpClient) {}
 
   generateShortLink(): void {
-    this.http.post<Link>('http://localhost:8080/api/links', this.longLink).subscribe(
+    this.http.post<Link>('http://localhost:8080/api/links',{firstUrl: this.longLink}).subscribe(
         (response) => {
+          console.log('Response from backend:', response);
           this.link = response;
           this.shortLink = this.link.shortenedUrl;
         },
@@ -36,13 +37,15 @@ export class LinkShortenerComponent {
   }
 
   getLongLinkFromShort(): void {
-    this.http.get<Link>(`http://localhost:8080/your-backend-api-path/${this.shortLinkInput}`).subscribe(
-        (response) => {
-          this.retrievedLongLink = response.firstUrl;
-        },
-        (error) => {
-          console.error('Error retrieving long link', error);
-        }
-      );
+    const shortLink = this.shortLinkInput;
+    this.http.get<Link>(`http://localhost:8080/api/links/short/${shortLink}`).subscribe(
+      (response) => {
+        this.retrievedLongLink = response.firstUrl;
+        console.log('Retrieved long link:', this.retrievedLongLink);
+      },
+      (error) => {
+        console.error('Error retrieving long link:', error);
+      }
+    );
   }
 }
