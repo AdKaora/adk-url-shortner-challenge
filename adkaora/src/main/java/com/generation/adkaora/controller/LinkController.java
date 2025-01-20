@@ -15,11 +15,6 @@ public class LinkController
     @Autowired
     ControllerHelper ch;
 
-    @GetMapping("/long/{longLink}")
-    public Link getShortLink(@PathVariable String longLink){
-        System.out.println("LongLink :"+longLink);
-        return ch.findByLongLink(longLink);}
-
     @GetMapping("/short/{shortLink}")
     public Link getLongLink(@PathVariable String shortLink){
         System.out.println("shortLink: "+shortLink);
