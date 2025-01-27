@@ -1,0 +1,63 @@
+Test Adkaora Fabio Gioia
+
+For this project, I decided to use Node.js as the main framework for the Backend and simple JavaScript for the Frontend. 
+I chose Node because I wanted to create something complete and stable within a single solution. 
+I relied on Express for route and API management, and I used an external file, specifically a JSON file, to store all the information. 
+I chose this over an external database because it allowed me to have something concrete and stable from the start.
+If I had more time, I would have adopted the idea of using an external database to provide extra security for the data.
+
+Inside, you will find:
+
+A function that creates a short URL from a Long URL (the DB is set with an expiration time of 2 minutes)
+A function to retrieve the original URL, if it exists and hasn’t expired
+A function to download the JSON file
+A function to clear the entire form
+
+Within the application, we find the following files:
+
+fakeDB/fake_database.json: This is the file used as a database for storing URLs.
+public/: Inside this folder, we find all the public files, including the index.html page and the external stylesheet style.css (located in public/css/style.css).
+script/index.js: This is the external script file used by the HTML page to call the server's APIs.
+src/app.js: This is the core of the Node.js server. It contains all the exposed APIs and the code to start the server.
+package.json: This file manages all the dependencies used by Node.js.
+
+Next Steps:
+
+Adding a real database
+Adding user authentication, with registration via form
+Authentication control
+Adding a framework (React/Vue) to improve the UI
+
+TO RUN THE PROJECT
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version 14 or higher)
+- npm (Node Package Manager)
+
+### Installation
+
+1. Clone the repository or download the project files.
+2. Navigate to the project directory:
+
+   ```
+   cd "adk-url-shortner-challenge
+   ```
+
+3. Install the dependencies:
+
+   ```
+   npm install
+   ```
+
+### Running the Application
+
+To start the server, run the following command:
+
+```
+node src/app.js
+```
+
+The application will be running at `http://localhost:3000`.

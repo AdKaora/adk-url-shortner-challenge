@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorten URL</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script src="/scripts/index.js"></script>
+    <h1 class="title">Create a Shortened URL</h1>
+    <div style="position: absolute; left: 0;top: 0;" style="display: flex;flex-direction: row;gap:5px">
+        <button class="dowload_database" onclick="download()">Download Local DB</button>
+        <button class="dowload_database" onclick="clearAll()">Clear</button>
+    </div>
+    <div class="original_url_section">
+        <input class="input_original_url" type="text" id="url" placeholder="Enter the Long URL">
+        <button class="button_create_shortURL" onclick="shortenURL()">Generate a Shorten URL</button>
+    </div>
+    <div id="shorter_url_section" class="shorter_url_section" style="display: none;">
+        <div style="display: flex;flex-direction: row;gap:5px">
+            <span  style="color: white; font-size: xx-large;">Shorten URL:</span>
+            <span  id="shortenedURL"></span>  
+        </div>
+    </div>
+
+    <div class="find_original_url_section">
+        <input class="input_find_original_url" type="text" id="shortURL" placeholder="Enter the Short URL">
+        <button class="button_find_original_url" onclick="findOriginalURL()">Find the Original URL</button>
+    </div>
+    <div id="find_result_section" class="find_result_section" style="display: none;">
+        <div style="display: flex;flex-direction: row;gap:5px">
+            <span  style="color: white; font-size: xx-large;">Original URL:</span>
+            <span  id="originalURL"></span>  
+        </div>
+    </div>
+</body>
+</html>
