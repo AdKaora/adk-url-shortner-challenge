@@ -73,3 +73,24 @@ You are free to use any technology you're comfortable with. Here are some sugges
 - **Scalability and Design**: Thoughtfulness regarding how the system could scale.
 - **Documentation**: Clear and concise documentation for setup and usage.
 
+
+---
+
+## Avvio del frontend
+
+Sviluppato con Node.js 24, React, PrimeReact 10 e Vite.
+
+Dalla cartella del progetto:
+
+```bash
+npm ci
+npm run dev
+```
+
+Apri http://127.0.0.1:5173. Per verificare la build esegui `npm run build`.
+
+I file del frontend sono in `src/client`. Questa prima versione genera codici di 5 caratteri nel browser e riusa il codice per lo stesso URL.
+
+I dati restano in memoria e si perdono ricaricando la pagina. I link su `short.example` sono dimostrativi: il redirect, il Worker e D1 arriveranno nei prossimi passaggi.
+
+Il generatore usa temporaneamente `Math.random`; nel Worker verra sostituito con un generatore crittografico.
