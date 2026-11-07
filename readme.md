@@ -109,3 +109,5 @@ Per la prova manuale, crea un link, aprilo e reinserisci lo stesso URL: deve res
 Il deploy previsto usa Workers e D1, con frontend e API sullo stesso dominio. L'ID D1 in `wrangler.jsonc` e un segnaposto locale: prima del deploy serve un database Cloudflare reale.
 
 SHA-256 con fallback casuale, cache, scadenza, contatore e autenticazione restano sviluppi successivi. Le scelte sono raccolte in [implementation-scelte.md](implementation-scelte.md).
+
+Guida completa di avvio e database in [RUNNING.md](RUNNING.md). Passaggi per andare online in [DEPLOYMENT.md](DEPLOYMENT.md).
