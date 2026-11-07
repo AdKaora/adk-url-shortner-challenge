@@ -1,6 +1,8 @@
 URL PIU PICCOLO
 
-APPUNTI DI PROGETTO: SCELTE PREVISTE, NON ANCORA IMPLEMENTATE.
+APPUNTI DI PROGETTO: SCELTE INIZIALI E PASSAGGI DI IMPLEMENTAZIONE.
+
+Le prime sezioni raccolgono le ipotesi iniziali. Lo stato attuale e nei passaggi di implementazione; SHA-256 resta un passaggio successivo.
 
  Full Stack Developer Test - demonstrate your skills in both frontend and backend development, as well as your ability to structure a scalable application
 
@@ -119,3 +121,66 @@ DB
 devops
 
   PROPOSTA SERVERLESS CON WORKERS
+
+---
+
+Passaggi di implementazione
+
+Primo commit - struttura e scelte iniziali
+
+Definizione della struttura prevista, separando frontend, backend e database.
+
+- `src/client` per la pagina React.
+- `src/worker` per API e redirect.
+- `migrations` per lo schema del database.
+
+Secondo commit - frontend
+
+- React e PrimeReact con tema pronto, per concentrarmi sul funzionamento della pagina.
+- Form per inserire l'URL  e mostrare il link breve.
+- Prima demo nel browser, con dati in memoria e link dimostrativi.
+
+Terzo commit previsto - Worker e D1
+
+- Collegare il form a `POST /api/links`. Aprire il codice con un redirect 302 e `Cache-Control: no-store`.
+- Hono per dichiarare le rotte con `app.post` e `app.get`. Meno  controlli manuali e codice più leggibile, con una dipendenza in più. 
+  Generazione casuale crittografica nel backend  5 caratteri e riuso del codice per lo stesso URL
+- D1 per conservare i link anche dopo un riavvio. Query parametrizzate e vincoli univoci su codice e URL.
+
+Cloudflare per lo shortener
+
+- Un Worker è il codice backend che risponde alle richieste. Creazione del link e redirect sono operazioni brevi, adatte a questo modello.
+- Serverless per affidare a Cloudflare la gestione dei server e la distribuzione del codice
+- Rete distribuita per eseguire il backend vicino agli utenti. La latenza del database resta da valutare.
+- Frontend, Worker e D1 sulla stessa piattaforma. Configurazione più semplice, con il compromesso della dipendenza da Cloudflare.
+
+Cache e bonus dopo il flusso base con database.
+
+Comandi per Worker e D1
+
+- Vite per sviluppare e compilare React. Il plugin Cloudflare avvia anche il Worker sullo stesso indirizzo.
+- Wrangler per le migrazioni D1 e il futuro deploy. Non serve un Makefile, i comandi sono in `package.json`.
+- Il frontend gia realizzato resta JavaScript. Il nuovo Worker usa TypeScript, con tipi per i link e il binding D1.
+- TypeScript intercetta errori di tipo prima della build. La validazione delle richieste e le query parametrizzate restano necessarie.
+
+Avvio dal terminale di VS Code, nella cartella del progetto
+
+```powershell
+npm ci
+npm run db:migrate
+npm run dev
+```
+
+`npm ci` installa le versioni del lockfile. Gli strumenti Cloudflare sono `@cloudflare/vite-plugin` e `wrangler`, nelle devDependencies.
+
+- `npm run dev` esegue `vite --host 127.0.0.1 --port 5173 --strictPort`.
+- `npm run db:migrate` esegue `wrangler d1 migrations apply DB --local` e prepara le tabelle.
+- `npm run typecheck` controlla i tipi del Worker e della configurazione Vite.
+- `npm run build` controlla i tipi e compila frontend e Worker.
+
+App su http://127.0.0.1:5173. Database su http://127.0.0.1:5173/cdn-cgi/local/explorer, poi DB e tabella links.
+
+Local Explorer e gia incluso negli strumenti Cloudflare, non richiede un installazione separata
+dati locali sono in .wrangler/, esclusa da Git. Per la prova locale non serve un account Cloudflare.
+
+Per la persistenza, D1 con query parametrizzate e vincoli univoci su codice e URL. I codici sono ancora casuali, SHA-256  TODO

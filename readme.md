@@ -76,21 +76,36 @@ You are free to use any technology you're comfortable with. Here are some sugges
 
 ---
 
-## Avvio del frontend
+## Avvio
 
-Sviluppato con Node.js 24, React, PrimeReact 10 e Vite.
+Con Node.js 24, dalla cartella del progetto:
 
-Dalla cartella del progetto:
-
-```bash
+```powershell
 npm ci
+npm run db:migrate
 npm run dev
 ```
 
-Apri http://127.0.0.1:5173. Per verificare la build esegui `npm run build`.
+Apri http://127.0.0.1:5173. Vite e il plugin Cloudflare avviano insieme frontend e Worker. In locale non serve un account Cloudflare.
 
-I file del frontend sono in `src/client`. Questa prima versione genera codici di 5 caratteri nel browser e riusa il codice per lo stesso URL.
+## Struttura e scelte
 
-I dati restano in memoria e si perdono ricaricando la pagina. I link su `short.example` sono dimostrativi: il redirect, il Worker e D1 arriveranno nei prossimi passaggi.
+- `src/client`: React e PrimeReact 10, mantenuti in JavaScript.
+- `src/worker`: API e redirect con Hono, in TypeScript.
+- `migrations`: schema SQL di D1.
 
-Il generatore usa temporaneamente `Math.random`; nel Worker verra sostituito con un generatore crittografico.
+Il form chiama `POST /api/links`. Il Worker accetta URL HTTP/HTTPS, genera cinque caratteri casuali crittografici e riusa il codice per lo stesso URL. Il link breve risponde con redirect 302 e `Cache-Control: no-store`, oppure 404 se non esiste.
+
+Hono semplifica le rotte. D1 conserva codice, URL e data di creazione; query parametrizzate e vincoli univoci evitano duplicati, con al massimo cinque tentativi per un codice libero. TypeScript aiuta a trovare errori di tipo; non sostituisce i controlli sulle richieste.
+
+## Database e verifiche
+
+Apri [Local Explorer](http://127.0.0.1:5173/cdn-cgi/local/explorer), poi DB e tabella links. E incluso negli strumenti Cloudflare. I dati locali restano in `.wrangler/`, esclusa da Git.
+
+`npm run typecheck` verifica i tipi del Worker e della configurazione Vite. `npm run build` esegue il controllo dei tipi e compila l'app.
+
+Per la prova manuale, crea un link, aprilo e reinserisci lo stesso URL: deve restituire lo stesso codice. Dopo un riavvio il link deve funzionare ancora.
+
+Il deploy previsto usa Workers e D1, con frontend e API sullo stesso dominio. L'ID D1 in `wrangler.jsonc` e un segnaposto locale: prima del deploy serve un database Cloudflare reale.
+
+SHA-256 con fallback casuale, cache, scadenza, contatore e autenticazione restano sviluppi successivi. Le scelte sono raccolte in [implementation-scelte.md](implementation-scelte.md).

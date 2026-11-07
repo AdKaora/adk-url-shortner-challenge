@@ -13,17 +13,15 @@ export default function App() {
 
   function changeUrl(event) {
     setUrl(event.target.value);
-    setError('');
+    setError(''); 
     setResult(null); 
   }
-
-
   async function submit(event) {
     event.preventDefault();
-    if (loading) return;     
+    if (loading) return;  
+       
     setError('');
     setResult(null); 
-
     setLoading(true);
     try {
       const link = await createLink(url);
@@ -33,18 +31,17 @@ export default function App() {
     } finally {
       setLoading(false);
     }
-  }
- 
+  } 
 
   return (
        <main style={{ maxWidth: '600px', margin: '40px auto' }}>
         <Card title="URL shortener" subTitle="Incolla indirizzo" >
           <form onSubmit={submit} aria-busy={loading}>
             <p><label htmlFor="original-url">URL og</label></p>
-            <div className="p-inputgroup">
+            <div className="p-inputgroup">          
               <InputText  id="original-url" type="url"  value={url}
                 placeholder="https://esempio.com/il-mio-indirizzo"
-                onChange={changeUrl}  disabled={loading}
+                onChange={changeUrl}  disabled={loading}       
                 invalid={Boolean(error)}  aria-invalid={Boolean(error)}
                 aria-describedby={error ? 'url-error' : undefined}
                 required
@@ -56,9 +53,8 @@ export default function App() {
           {result && (
             <section aria-label="Risultato" aria-live="polite">
               <p><label htmlFor="short-url">Link breve</label></p>
-              <div className="p-inputgroup">
-                {/* todo redirect arriverà con il worker */}
-                <InputText id="short-url" value={'https://short.example/' + result.code} readOnly /> 
+              <div className="p-inputgroup"> 
+                <InputText id="short-url" value={window.location.origin + '/' + result.code} readOnly /> 
               </div>
             </section>
           )}
