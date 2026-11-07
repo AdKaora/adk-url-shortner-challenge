@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "adk-url-shortener",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-11-07",
+  // i file statici del frontend vengono configurati dal plugin Vite
+  "assets": {
+    // index puo essere un codice: evito il redirect automatico alla homepage
+    "run_worker_first": ["/index"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "adk-url-shortener",
+      // identificativo locale, da sostituire prima del deploy
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}
